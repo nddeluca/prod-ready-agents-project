@@ -26,15 +26,21 @@ class RawNvimEditor:
         self.tmpdir = tempfile.mkdtemp()
         self.socket_path = os.path.join(self.tmpdir, "nvim.sock")
 
-        # Start headless nvim process
+        # Start headless nvim process with swap files disabled and unique shada
         self.proc = subprocess.Popen(
-            ["nvim", "--headless", "--listen", self.socket_path, "--noplugin"]
+            ["nvim", "--headless", "--listen", self.socket_path, "--noplugin", "-n", "-i", "NONE"]
         )
 
         time.sleep(0.5)
 
         # Connect to nvim
         self.nvim = pynvim.attach("socket", path=self.socket_path)
+        
+        # Set nvim options to prevent swap file issues
+        self.nvim.command("set noswapfile")
+        self.nvim.command("set nobackup")
+        self.nvim.command("set nowritebackup")
+        
         self.buffer = self.nvim.current.buffer
 
         # Initialize with content if provided
@@ -59,8 +65,16 @@ class RawNvimEditor:
             self.nvim.quit()
         except Exception:
             pass
-        self.proc.terminate()
-        self.proc.wait(timeout=5)
+        
+        try:
+            self.proc.terminate()
+            self.proc.wait(timeout=2)
+        except Exception:
+            try:
+                self.proc.kill()
+                self.proc.wait(timeout=1)
+            except Exception:
+                pass
 
     def type_keys(self, keys: str) -> None:
         """
