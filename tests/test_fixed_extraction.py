@@ -80,7 +80,7 @@ def extract_solution_from_response(response_text: str) -> str:
     return ""
 
 # Test the problematic case
-problematic_response = """Solution: 
+problematic_response = r"""Solution: 
 ```
 ggO{<Esc>:%s/\(.*\)=\(.*\)/  "\1": "\2",/<CR>ggddG$xO}<Esc>
 ```

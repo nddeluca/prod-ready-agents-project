@@ -5,6 +5,8 @@ Test extraction issues - some problems show empty backticks
 
 import asyncio
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from vimgolf_solver import VimGolfSolver
 
 async def test_single_problem_extraction():

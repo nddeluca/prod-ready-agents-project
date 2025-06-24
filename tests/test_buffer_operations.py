@@ -21,13 +21,17 @@ class TestPynvimBuffer:
             socket_path = os.path.join(tmpdir, "nvim.sock")
 
             proc = subprocess.Popen(
-                ["nvim", "--headless", "--listen", socket_path, "--noplugin"]
+                ["nvim", "--headless", "--listen", socket_path, "--noplugin", "-n", "-i", "NONE"]
             )
 
             time.sleep(0.5)
 
             try:
                 nvim = pynvim.attach("socket", path=socket_path)
+                # Set nvim options to prevent swap file issues
+                nvim.command("set noswapfile")
+                nvim.command("set nobackup")
+                nvim.command("set nowritebackup")
                 nvim.command("set nomodified")
                 yield nvim
             finally:

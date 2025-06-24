@@ -4,6 +4,9 @@ Test script to debug vim command interpretation issues
 """
 
 import asyncio
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from src.pynvim_agents.raw_editor import RawNvimEditor
 
 def test_simple_commands():

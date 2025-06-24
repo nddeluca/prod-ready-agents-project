@@ -5,6 +5,8 @@ Debug the empty backtick extraction issue
 
 import asyncio
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from vimgolf_solver import VimGolfSolver
 
 async def test_problematic_problems():

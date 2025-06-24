@@ -4,6 +4,9 @@ Debug the vim simulation issue by testing individual components
 """
 
 import asyncio
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from src.pynvim_agents.raw_editor import RawNvimEditor
 
 def test_vim_commands():

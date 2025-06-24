@@ -62,19 +62,30 @@ class RawNvimEditor:
     def close(self) -> None:
         """Clean up the nvim instance"""
         try:
-            self.nvim.quit()
+            if hasattr(self, 'nvim') and self.nvim:
+                self.nvim.quit()
         except Exception:
             pass
         
         try:
-            self.proc.terminate()
-            self.proc.wait(timeout=2)
+            if hasattr(self, 'proc') and self.proc:
+                self.proc.terminate()
+                self.proc.wait(timeout=2)
         except Exception:
             try:
-                self.proc.kill()
-                self.proc.wait(timeout=1)
+                if hasattr(self, 'proc') and self.proc:
+                    self.proc.kill()
+                    self.proc.wait(timeout=1)
             except Exception:
                 pass
+        
+        # Clean up temp directory
+        try:
+            if hasattr(self, 'tmpdir') and os.path.exists(self.tmpdir):
+                import shutil
+                shutil.rmtree(self.tmpdir, ignore_errors=True)
+        except Exception:
+            pass
 
     def type_keys(self, keys: str) -> None:
         """

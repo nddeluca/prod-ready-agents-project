@@ -4,6 +4,9 @@ Test script to simulate LLM output and see what causes mark errors
 """
 
 import re
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from src.pynvim_agents.raw_editor import RawNvimEditor
 
 def extract_solution_from_response(response_text: str) -> str:

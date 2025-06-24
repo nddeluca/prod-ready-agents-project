@@ -5,6 +5,9 @@ Test concurrent nvim instances to identify hanging
 
 import asyncio
 import time
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from src.pynvim_agents.raw_editor import RawNvimEditor
 
 async def test_single_nvim():
@@ -57,6 +60,7 @@ async def test_concurrent_nvim():
 
 async def test_extraction_edge_cases():
     """Test extraction with problematic responses"""
+    sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
     from vimgolf_solver import VimGolfSolver
     
     solver = VimGolfSolver()

@@ -5,6 +5,8 @@ Test with a simpler problem to verify the fixes work
 
 import asyncio
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from vimgolf_solver import VimGolfSolver, VimGolfProblem
 
 async def test_simple_problem():

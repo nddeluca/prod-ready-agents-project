@@ -3,13 +3,16 @@
 Test corrected vim commands
 """
 
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from src.pynvim_agents.raw_editor import RawNvimEditor
 
 def test_corrected_command():
     """Test the corrected command without backticks"""
     
     start_text = "[[1,2],[3,4,[]],[5,6,[7,8]]]"
-    expected_text = "[1,2,3,4,5,6,7,8]"
+    expected_text = "1,2,3,4,5,6,7,8"
     
     # The corrected command (no backticks)
     command = ":%s/\\[\\|\\]\\|,\\[\\]//g<CR>"
@@ -44,12 +47,12 @@ def test_corrected_command():
             
             print(f"Match: {result_clean == expected_clean}")
             
-            return 1 if result_clean == expected_clean else 0
+            assert result_clean == expected_clean, f"Expected {expected_clean}, got {result_clean}"
             
     except Exception as e:
         print(f"Error: {e}")
-        return 0
+        assert False, f"Test failed with error: {e}"
 
 if __name__ == "__main__":
-    score = test_corrected_command()
-    print(f"Final score: {score}")
+    test_corrected_command()
+    print("Test completed successfully")

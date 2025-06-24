@@ -5,6 +5,9 @@ Debug the evaluation issue
 
 import asyncio
 import time
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from vimgolf_solver import VimGolfSolver, VimGolfProblem
 
 async def test_direct_evaluation():
